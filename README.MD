@@ -3,7 +3,7 @@ This is my attempt at the Bournemouth University DWK Resiliency Management Scena
 
 the notes that i have made can be found in the folder 
 
-src ---------
-    -notes---
-        DWK-reciliency-management-scenario.txt
+src
+|__ notes
+    |--DWK-reciliency-management-scenario.txt
         
