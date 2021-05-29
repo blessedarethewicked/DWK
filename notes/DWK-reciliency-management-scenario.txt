@@ -1,0 +1,245 @@
+to desgin an reseiliency managemtn system. 
+
+basically if somethng technical cuases the system to go down we want to make sure that
+we are able to the application can recover as quickly as possible 
+
+technology recovnery action plan 
+
+componet loss site loss and cyber malwar attack
+
+fo non crytical application ther one scenario is iste loss
+
+
+
+RTO reconvery time objective 
+BIA business impact assessment 
+TRAP techonology recovery action plan 
+
+
+
+need to design the resiliency management system for the un only 
+
+MoSCow technique - Must have, Should have, Could have, Would have 
+
+
+system requirements
+General  functinality 
+
+login system for the application, operate and resiliency team stuff
+
+acess to the sesiliency manegemtn system requiring login in
+
+system must record: application name, application ID, RTO, primary location,
+alternate location, application staff allocated and operate staff
+allocated.
+
+
+####################################################
+
+i could probably save the information as a dictinary of dictionary 
+#####################################################
+
+
+application records msut allow TRAP documents to be attached or removed
+
+#########################################################
+
+i could use like pointers
+
+for example attaching a document simpley means adding a value which point to where 
+the actual TRAP document is 
+removing this value is the same as dettaching the document 
+
+#########################################################
+
+application records when a material chanfe has occurred on an application
+and a date to when this change happened 
+
+testing records must record : date, scenario, data centre or standalone test type,
+duration, source location, target location, test result and testing evidence to be
+recorded. 
+
+testing records within the system where the test duration is greater than the RTO must be
+marked as a fail.
+
+the system shoual allow reporting on data center events results
+
+###################################################################
+
+this could be some sort of report function that goes though all the tests classifies the 
+taskes on weather the failed succeeded. there should also show the test persoformed
+
+###################################################################
+
+the system could have a help function for new users
+
+
+
+
+role based functionality 
+ability fo perfoem a number of actions which depends on the staff members system role
+
+
+application entries
+
+an application must be assinged a RTO bsed on a BIA 
+
+an application must have at least two applicationteam members and two operattion team 
+members assinged to it at point of creation 
+
+an application must have a TRP  approval recorded against it in the last twelve months
+
+an application should have a a TRP approval recorded against it following 
+the indication that a materal chage has occured 
+
+an application TRap documents shoudl have an indicator as to whcih scenario the TRAP covers 
+whilst the most critical application should have all scenaros included in the documenst,
+non-critial apps can also inculde scenarios that are not required 
+
+
+testing entries 
+
+Only one testing scenario per day for a given application 
+
+for a test to ve tesing compliant it requires the application to have a successful test 
+for each scenaro determined by criticality for the last twelve months
+
+when a testing record enty is shown as completd is must update the application 
+entry primary and DR location appropriately
+
+########################################################################
+i think this means that it needs to update the primary site and the DR sites
+#######################################################################
+to be testing compliant an application should have the most recent test for
+each scenario be successful. the testing scenarios applicable are tedetmined
+by criticality (see Appendix a p)
+
+when a testing record entry is recorded as failed then testing compliance should be 
+removed from the application 
+
+
+
+Reporting Functionality 
+the system must be able to produce reports as an excel file
+####################################################################################
+need to find a libary that can make excel files
+
+need to formart the report such the the excel file looks correct
+
+this could be done using one function.
+##################################################################################
+
+excel files generated from the system should allow for data manipulation
+##################################################################################
+need more explanation 
+##################################################################################
+
+the system should be able to run a report based on slected date range 
+#################################################################################
+need to make sure that i have a consistant dating formart thought the whole thing
+#################################################################################
+
+all members of the resiliency team must be able to run reports out of the system for 
+all application in the systems :
+	must be able to run a report showing details about all application entries
+	must be able to runa  report showing details abouttesing records
+	must be able to runa report showing testing compliance status
+	shoudl be able to runa report shoing TRAP approval comliance status
+	could be able to run a report showing re-testing due dates
+
+all members of the application and operat teams should be able to run reports 
+out of the system for all application entreis that they are associated with:'
+	shoud be able to run a report showing details about all their application entries
+	should be able to run a report showing details about all their testing records
+	could be able to run a report showing all their testin complaince status
+
+
+
+
+APPENDIX B 
+Testing Scenarios
+component loss - loss of any one server withina singel data centre. plan covers all tiers
+
+site loss - loss of a data centre. plan must cover moving processing rto alternate site
+
+cyber malware attakc - loss of ll infrastructure in all data centers. plan must 
+covert receatuing application from bare metal, recovering data and returning
+processing to BAU
+
+
+APPENDIX C 
+TRAPs for each applicatioon deplyment will be created and maintained in system
+for each application 
+
+Details of planning content for technology recovery action plan for each application
+
+roles and responsiblilies of recovery personnel 
+infrastruture component associated witht eh application 
+sofware ( operatin system , ulilites, application programs)
+detailed recovery step including activies, step,surations,key person,dependencies,
+componet dependancies, and required supporting documnetaion that will enable recovery of 
+IT services to nroal production operation. 
+
+
+
+
+
+
+
+
+
+things to keep in mind 
+for the final product an actual database could be used rather than just a cvs or whatever
+shit i use
+
+
+
+
+
+
+questions ?
+what is a metiral change ? 
+does data minipulation in the excel file mean changes to the actual database ?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
