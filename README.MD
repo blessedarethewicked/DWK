@@ -3,16 +3,15 @@ This is my attempt at the Bournemouth University DWK Resiliency Management Scena
 
 the notes that i have made can be found in the folder 
 
-app
-└── screens
-    └── App
-        └── screens
-            ├── Admin
-            │   └── screens
-            │       ├── Reports
-            │       └── Users
-            └── Course
-                └── screens
-                    └── Assignments
-                    
+var routes = (
+  <Route name="App">
+    <Route name="Admin">
+      <Route name="Users"/>
+      <Route name="Reports"/>
+    </Route>
+    <Route name="Course">
+      <Route name="Assignments"/>
+    </Route>
+  </Route>
+);           
                     
