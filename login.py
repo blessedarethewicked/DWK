@@ -1,10 +1,28 @@
 import sys
-import os
 import hashlib
 import csv
+import re
+import hashlib, uuid
 
 
 commands = ['-u', '-p','-n','-r']
+
+def print_conditions():
+    """
+     this function prints the conditions for the user and password strings
+    """
+
+    print('Username conditions: \n')
+
+    print(' Must be 8-15 characters and must start with a letter')
+    print(' May not contain special characters – only letters and numbers \n')
+
+    print('password conditions:\n')
+    print(' Must be 5-20 characters long')
+    print(' Must contain at least one lower-case letter (abcdefghijklmnopqrstuvwxyz)')
+    print(' Must contain at least one number (0123456789)')
+    print(' Must not contain a colon (:); an ampersand (&); a period (.); a tilde (~); or a space.')
+    return 0 
 
 def add_new_user(username,password,role):
     """
@@ -14,10 +32,26 @@ def add_new_user(username,password,role):
     """
     print('\n Adding a new user ')
 
-    # genarate the hashed password 
-    hashed_password= hashlib.sha256(password.encode()).hexdigest()
+    # checking conditions for the password
+    if re.fullmatch(r'[a-zA-Z][a-zA-Z0-9]{7,15}', username):
+        print('the username given is valid')
+    else:
+        print('the username given is not valid')
+        return 0
+    if re.fullmatch(r'[^: \&\.\~]*[a-z0-9]+[^:\&\.\~]{5,20}', password):
+        print('the password given is valid')
+    else:
+        print('the password given is not valid')
+        return 0
+
+
+    # genarate salt and then hash 
+    salt = uuid.uuid4().hex
+    key = salt + password
+    print(salt)
+    hashed_password= hashlib.sha256(key.encode()).hexdigest()
     print(hashed_password)
-    user = [username,hashed_password,role]
+    user = [username,salt,hashed_password,role]
 
     # check if we have already saves that user
     print('checking if user alredy exits')
@@ -47,6 +81,20 @@ def login(username,password):
     """
     print('\nfuntion login')
 
+    # checking conditions for the password
+    if re.fullmatch(r'[a-zA-Z][a-zA-Z0-9]{7,15}', username):
+        print('the username given is valid')
+    else:
+        print('the username given is not valid')
+        return 0
+    if re.fullmatch(r'[^: \&\.\~]*[a-z0-9]+[^:\&\.\~]{5,20}', password):
+        print('the password given is valid')
+    else:
+        print('the password given is not valid')
+        return 0
+
+
+
     with open("user_password.csv","r") as f:
         csv_reader = csv.reader(f, delimiter=',')
         line_count = 0
@@ -54,9 +102,12 @@ def login(username,password):
             if row =='[]':continue
             # if the user exits we check the password
             if username in row:
-                hashed_password= hashlib.sha256(password.encode()).hexdigest()
-                if hashed_password== row[1]:
-                    print(' the Password matches')
+                print(row[1])
+                key = row[1] + password
+                hashed_password= hashlib.sha256(key.encode()).hexdigest()
+                print(hashed_password)
+                if hashed_password== row[2]:
+                    print('the Password matches')
                 else:
                     print('wrong password')
                 return 0
@@ -69,10 +120,12 @@ def call_function(arguments):
     """
     if arguments[1]== '-n':
         add_new_user(arguments[2],arguments[4],arguments[6])
+        return 0
     elif arguments[1]== '-u':
         login(arguments[2],arguments[4])
+        return 0 
     else:
-        return
+        return 0
 
 # this checks if the argments in argv are valid
 for i in range(1,len(sys.argv)):
@@ -85,5 +138,10 @@ for i in range(1,len(sys.argv)):
         quit()
 
 
-call_function(sys.argv)
-print(' \ntest passed: exiting script')
+
+
+print_conditions()
+if call_function(sys.argv)==0:
+    print('exited with an error')
+else:
+    print(' \ntest passed: exiting script')
