@@ -6,6 +6,7 @@ import hashlib, uuid
 
 
 commands = ['-u', '-p','-n','-r']
+roles = ['application','operate','resiliency']
 
 def print_conditions():
     """
@@ -30,27 +31,32 @@ def add_new_user(username,password,role):
     example:
     python login -n [username] -p [password]
     """
-    print('\n Adding a new user ')
+    print('\nAdding a new user ')
 
     # checking conditions for the password
     if re.fullmatch(r'[a-zA-Z][a-zA-Z0-9]{7,15}', username):
         print('the username given is valid')
     else:
         print('the username given is not valid')
-        return 0
+        return 1
     if re.fullmatch(r'[^: \&\.\~]*[a-z0-9]+[^:\&\.\~]{5,20}', password):
         print('the password given is valid')
     else:
         print('the password given is not valid')
-        return 0
+        return 1
 
+
+    # check that the role is ligit 
+    if role in roles:
+        print(f'The role {role} is recognised')
+    else:
+        print(f'the role {role} is not recognised')
+        return 1
 
     # genarate salt and then hash 
     salt = uuid.uuid4().hex
     key = salt + password
-    print(salt)
     hashed_password= hashlib.sha256(key.encode()).hexdigest()
-    print(hashed_password)
     user = [username,salt,hashed_password,role]
 
     # check if we have already saves that user
@@ -63,7 +69,7 @@ def add_new_user(username,password,role):
             # if the user already exits then we leave this loop
             if username in row:
                 print(f'user {username} already exits ')
-                return 0
+                return 1
 
     # save this to the csv file 
     with open("user_password.csv","a") as f:
@@ -86,12 +92,12 @@ def login(username,password):
         print('the username given is valid')
     else:
         print('the username given is not valid')
-        return 0
+        return 1
     if re.fullmatch(r'[^: \&\.\~]*[a-z0-9]+[^:\&\.\~]{5,20}', password):
         print('the password given is valid')
     else:
         print('the password given is not valid')
-        return 0
+        return 1
 
 
 
@@ -110,7 +116,7 @@ def login(username,password):
                     print('the Password matches')
                 else:
                     print('wrong password')
-                return 0
+                return 1
 
     return 0
 
@@ -119,13 +125,13 @@ def call_function(arguments):
     This functions job is to tall the correct function based on the argv inputs
     """
     if arguments[1]== '-n':
-        add_new_user(arguments[2],arguments[4],arguments[6])
-        return 0
+        
+        return add_new_user(arguments[2],arguments[4],arguments[6])
     elif arguments[1]== '-u':
-        login(arguments[2],arguments[4])
-        return 0 
+        
+        return login(arguments[2],arguments[4])
     else:
-        return 0
+        return 1
 
 # this checks if the argments in argv are valid
 for i in range(1,len(sys.argv)):
@@ -141,7 +147,8 @@ for i in range(1,len(sys.argv)):
 
 
 print_conditions()
-if call_function(sys.argv)==0:
+error = call_function(sys.argv)
+if error==1:
     print('exited with an error')
-else:
-    print(' \ntest passed: exiting script')
+elif error==0:
+    print(' \n All test passed')
