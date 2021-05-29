@@ -1,0 +1,4 @@
+need to first work on a login system
+    for quick implimention i am going to use json files
+    rather than a proper dataset
+need to decided data storage  system
